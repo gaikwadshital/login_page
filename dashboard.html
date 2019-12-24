@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="http://Unpkg.com/axios/dist/axios.min.js"></script>
+    <title>dashboard</title>
+</head>
+<body>
+<div class="container" id="app">
+    <h1>dashboard</h1>
+    <button type="button" class="btn btn-primary" @click="submit">Logout</button>
+    <ul>
+        <li v-for="todo in todos">
+        {{todo.title}}
+    </li>
+    </ul>
+</div>
+<script>
+    const app = new Vue(
+        {
+            el: '#app',
+            data:{
+              todos:[]
+            },
+            methods:
+                {
+                    submit() {
+                        console.log('here');
+                        //localStorage.setItem('loggedIn', false);
+                        axios.post('/logout').then(res=>
+                        {
+                            if(res.status===200) {
+                                location.href = '/';
+
+                            }
+                        }).catch(error=>{
+                            throw error;
+                        })
+
+                    }
+                }
+
+          /*  created:function() {
+                if (localStorage.getItem('loggedIn') === false) {
+                    location.href = '/';
+                }
+                console.log("here")
+                axios.get('https://jsonplaceholder.typicode.com/todos')
+                    .then(json=>{
+                        console.log(json.data)
+                        this.todos=json.data;})
+
+
+
+            }*/
+
+        }
+    )
+</script>
+
+</body>
+</html>
